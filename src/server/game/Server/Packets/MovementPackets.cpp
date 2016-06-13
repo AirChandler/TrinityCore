@@ -704,3 +704,26 @@ void WorldPackets::Movement::MoveSplineDone::Read()
     _worldPacket >> movementInfo;
     _worldPacket >> SplineID;
 }
+
+WorldPacket const* WorldPackets::Movement::SuspendToken::Write()
+{
+    _worldPacket << uint32(SequenceIndex);
+    _worldPacket.WriteBits(Reason, 2);
+    _worldPacket.FlushBits();
+
+    return &_worldPacket;
+}
+
+void WorldPackets::Movement::SuspendTokenResponse::Read()
+{
+    _worldPacket >> SequenceIndex;
+}
+
+WorldPacket const* WorldPackets::Movement::ResumeToken::Write()
+{
+    _worldPacket << uint32(SequenceIndex);
+    _worldPacket.WriteBits(Reason, 2);
+    _worldPacket.FlushBits();
+
+    return &_worldPacket;
+}

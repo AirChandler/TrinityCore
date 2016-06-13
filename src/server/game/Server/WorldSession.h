@@ -424,6 +424,7 @@ namespace WorldPackets
         class MoveTimeSkipped;
         class SummonResponse;
         class MoveSplineDone;
+        class SuspendTokenResponse;
     }
 
     namespace NPC
@@ -1174,6 +1175,7 @@ class WorldSession
 
         void HandleMoveWorldportAckOpcode(WorldPackets::Movement::WorldPortResponse& packet);
         void HandleMoveWorldportAckOpcode();                // for server-side calls
+        void HandleSuspendTokenResponse(WorldPackets::Movement::SuspendTokenResponse& suspendTokenResponse);
 
         void HandleMovementOpcodes(WorldPackets::Movement::ClientPlayerMovement& packet);
         void HandleSetActiveMoverOpcode(WorldPackets::Movement::SetActiveMover& packet);

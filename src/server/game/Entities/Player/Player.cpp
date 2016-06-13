@@ -1247,7 +1247,7 @@ void Player::Update(uint32 p_time)
             m_zoneUpdateTimer -= p_time;
     }
 
-    if (m_timeSyncTimer > 0)
+    if (m_timeSyncTimer > 0 && !IsBeingTeleportedFar())
     {
         if (p_time >= m_timeSyncTimer)
             SendTimeSync();
@@ -1661,18 +1661,10 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
 
             if (!GetSession()->PlayerLogout())
             {
-                if (mEntry->IsDungeon())
-                {
-                    WorldPackets::Instance::UpdateLastInstance updateLastInstance;
-                    updateLastInstance.MapID = mapid;
-                    SendDirectMessage(updateLastInstance.Write());
-                }
-
-                WorldPackets::Movement::NewWorld packet;
-                packet.MapID = mapid;
-                packet.Pos = static_cast<Position>(m_teleport_dest);
-                packet.Reason = !(options & TELE_TO_SEAMLESS) ? NEW_WORLD_NORMAL : NEW_WORLD_SEAMLESS;
-                SendDirectMessage(packet.Write());
+                WorldPackets::Movement::SuspendToken suspendToken;
+                suspendToken.SequenceIndex = m_movementCounter; // not incrementing
+                suspendToken.Reason = options & TELE_TO_SEAMLESS ? 2 : 1;
+                SendDirectMessage(suspendToken.Write());
             }
 
             // move packet sent by client always after far teleport
@@ -22165,6 +22157,14 @@ void Player::SetGroup(Group* group, int8 subgroup)
 
 void Player::SendInitialPacketsBeforeAddToMap()
 {
+    if (!(m_teleport_options & TELE_TO_SEAMLESS))
+    {
+        m_movementCounter = 0;
+        ResetTimeSync();
+    }
+
+    SendTimeSync();
+
     /// Pass 'this' as argument because we're not stored in ObjectAccessor yet
     GetSocial()->SendSocialList(this, SOCIAL_FLAG_ALL);
 
@@ -22255,9 +22255,6 @@ void Player::SendInitialPacketsAfterAddToMap()
     uint32 newzone, newarea;
     GetZoneAndAreaId(newzone, newarea);
     UpdateZone(newzone, newarea);                            // also call SendInitWorldStates();
-
-    ResetTimeSync();
-    SendTimeSync();
 
     GetSession()->SendLoadCUFProfiles();
 
