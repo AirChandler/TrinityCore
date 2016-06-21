@@ -1639,6 +1639,7 @@ enum OpcodeServer : uint32
 
     // Opcodes that are not generated automatically
     SMSG_ACCOUNT_HEIRLOOM_UPDATE                      = 0xBADD, // no client handler
+    SMSG_ITEM_UPGRADE_RESULT                          = 0x25DB, // no client handler
     SMSG_CHUNKED_PACKET                               = 0x0227,
     SMSG_COMPRESSED_PACKET                            = 0x0224,
     SMSG_FINAL_CHUNK                                  = 0x02A4,

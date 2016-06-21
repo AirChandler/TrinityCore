@@ -76,6 +76,7 @@ extern DB2Storage<ItemSparseEntry>                      sItemSparseStore;
 extern DB2Storage<ItemSpecEntry>                        sItemSpecStore;
 extern DB2Storage<ItemSpecOverrideEntry>                sItemSpecOverrideStore;
 extern DB2Storage<ItemToBattlePetSpeciesEntry>          sItemToBattlePetSpeciesStore;
+extern DB2Storage<ItemUpgradeEntry>                     sItemUpgradeStore;
 extern DB2Storage<MailTemplateEntry>                    sMailTemplateStore;
 extern DB2Storage<ModifierTreeEntry>                    sModifierTreeStore;
 extern DB2Storage<MountCapabilityEntry>                 sMountCapabilityStore;
@@ -156,6 +157,7 @@ public:
     typedef std::array<std::vector<boost::regex>, TOTAL_LOCALES + 1> NameValidationRegexContainer;
     typedef std::unordered_map<uint32, std::set<uint32>> PhaseGroupContainer;
     typedef std::unordered_map<uint32, std::vector<QuestPackageItemEntry const*>> QuestPackageItemContainer;
+    typedef std::unordered_map<uint32, uint32> RulesetItemUpgradeContainer;
     typedef std::unordered_map<uint32, std::vector<SpecializationSpellsEntry const*>> SpecializationSpellsContainer;
     typedef std::unordered_map<uint32, std::vector<SpellPowerEntry const*>> SpellPowerContainer;
     typedef std::unordered_map<uint32, std::unordered_map<uint32, std::vector<SpellPowerEntry const*>>> SpellPowerDifficultyContainer;
@@ -193,6 +195,7 @@ public:
     std::vector<QuestPackageItemEntry const*> const* GetQuestPackageItems(uint32 questPackageID) const;
     uint32 GetQuestUniqueBitFlag(uint32 questId);
     std::set<uint32> GetPhasesForGroup(uint32 group) const;
+    uint32 GetRulesetItemUpgrade(uint32 itemId) const;
     std::vector<SpecializationSpellsEntry const*> const* GetSpecializationSpells(uint32 specId) const;
     std::vector<SpellPowerEntry const*> GetSpellPowers(uint32 spellId, Difficulty difficulty = DIFFICULTY_NONE, bool* hasDifficultyPowers = nullptr) const;
     bool GetToyItemIdMatch(uint32 toy) const;
@@ -217,6 +220,7 @@ private:
     NameGenContainer _nameGenData;
     NameValidationRegexContainer _nameValidators;
     PhaseGroupContainer _phasesByGroup;
+    RulesetItemUpgradeContainer _rulesetItemUpgrade;
     QuestPackageItemContainer _questPackages;
     SpecializationSpellsContainer _specializationSpellsBySpec;
     SpellPowerContainer _spellPowers;

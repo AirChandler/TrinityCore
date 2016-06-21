@@ -523,3 +523,20 @@ void WorldPackets::Item::UseCritterItem::Read()
 {
     _worldPacket >> ItemGuid;
 }
+
+void WorldPackets::Item::UpgradeItem::Read()
+{
+    _worldPacket >> ItemMaster;
+    _worldPacket >> ItemGUID;
+    _worldPacket >> UpgradeID;
+    _worldPacket >> ContainerSlot;
+    _worldPacket >> Slot;
+}
+
+WorldPacket const* WorldPackets::Item::ItemUpgradeResult::Write()
+{
+    _worldPacket.WriteBit(Success);
+    _worldPacket.FlushBits();
+
+    return &_worldPacket;
+}
