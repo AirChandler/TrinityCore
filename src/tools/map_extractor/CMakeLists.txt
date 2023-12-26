@@ -27,6 +27,8 @@ target_link_libraries(mapextractor
     common
     casc)
 
+target_compile_options(mapextractor PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 CollectIncludeDirectories(
   ${CMAKE_CURRENT_SOURCE_DIR}
   PUBLIC_INCLUDES)

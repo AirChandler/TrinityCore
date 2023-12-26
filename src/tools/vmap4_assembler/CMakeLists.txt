@@ -16,6 +16,8 @@ target_link_libraries(vmap4assembler
   casc
   zlib)
 
+target_compile_options(vmap4assembler PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 set_target_properties(vmap4assembler
     PROPERTIES
       FOLDER

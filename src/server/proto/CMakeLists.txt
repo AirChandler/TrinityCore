@@ -36,6 +36,8 @@ add_library(proto
   ${PRIVATE_SOURCES}
 )
 
+target_compile_options(proto PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 CollectIncludeDirectories(
   ${CMAKE_CURRENT_SOURCE_DIR}
   PUBLIC_INCLUDES

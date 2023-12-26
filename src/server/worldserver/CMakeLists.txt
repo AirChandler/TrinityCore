@@ -51,6 +51,8 @@ target_link_libraries(worldserver
     game
     readline)
 
+target_compile_options(worldserver PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 CollectIncludeDirectories(
   ${CMAKE_CURRENT_SOURCE_DIR}
   PUBLIC_INCLUDES

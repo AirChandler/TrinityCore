@@ -21,6 +21,8 @@ target_link_libraries(vmap4extractor
     casc
     bzip2)
 
+target_compile_options(vmap4extractor PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 CollectIncludeDirectories(
   ${CMAKE_CURRENT_SOURCE_DIR}
   PUBLIC_INCLUDES)

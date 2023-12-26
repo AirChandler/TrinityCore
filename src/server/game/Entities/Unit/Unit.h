@@ -626,7 +626,7 @@ enum WeaponAttackType : uint8
 
 enum CombatRating
 {
-    CR_UNUSED_1                         = 0,
+    CR_RESERVED_1                       = 0,
     CR_DEFENSE_SKILL                    = 1, // Removed in 4.0.1
     CR_DODGE                            = 2,
     CR_PARRY                            = 3,
@@ -647,13 +647,13 @@ enum CombatRating
     CR_HASTE_RANGED                     = 18,
     CR_HASTE_SPELL                      = 19,
     CR_AVOIDANCE                        = 20,
-    CR_UNUSED_2                         = 21,
+    CR_RESERVED_2                       = 21,
     CR_WEAPON_SKILL_RANGED              = 22,
     CR_EXPERTISE                        = 23,
     CR_ARMOR_PENETRATION                = 24,
     CR_MASTERY                          = 25,
-    CR_UNUSED_3                         = 26,
-    CR_UNUSED_4                         = 27,
+    CR_RESERVED_3                       = 26,
+    CR_RESERVED_4                       = 27,
     CR_VERSATILITY_DAMAGE_DONE          = 28,
     // placeholder                      = 29,
     CR_VERSATILITY_DAMAGE_TAKEN         = 30

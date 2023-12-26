@@ -8,8 +8,8 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-# We require CMake >= 3.0
-cmake_minimum_required(VERSION 3.0)
+# We require CMake >= 3.22
+cmake_minimum_required(VERSION 3.22.0)
 
 # Set projectname (must be done AFTER setting configurationtypes)
 project(TrinityCore)
@@ -23,6 +23,14 @@ endif()
 if(POLICY CMP0054)
   cmake_policy(SET CMP0054 NEW) # Only interpret if() arguments as variables or keywords when unquoted - prevents intepreting if (SOME_STRING_VARIABLE MATCHES "MSVC") as if (SOME_STRING_VARIABLE MATCHES "1")
 endif()
+
+if(POLICY CMP0057)
+  cmake_policy(SET CMP0057 NEW) # Support IN_LIST Operator required for BOOST
+endif()
+
+IF(POLICY CMP0077)
+  cmake_policy(SET CMP0077 NEW)
+ENDIF()
 
 # add this options before PROJECT keyword
 set(CMAKE_DISABLE_SOURCE_CHANGES ON)
@@ -41,6 +49,28 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/macros")
 if( NOT CMAKE_BUILD_TYPE )
   set(CMAKE_BUILD_TYPE "Release")
 endif()
+
+# Output directories
+set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_LIST_DIR}/out/bin")
+set(CONF_DIR "${CMAKE_CURRENT_LIST_DIR}/out/conf")
+set(TOOLS ON)
+set(USE_SCRIPTPCH OFF)
+set(USE_COREPCH OFF)
+set(WITH_COREDEBUG ON)
+set(CMAKE_BUILD_TYPE "Debug")
+IF(NOT WIN32)
+  # Local copy should be installed in root directory (unix based systems)
+  # TrinityCore requires OpenSSL v1.0.0 (differs from global install so point to local copy)
+  set(OPENSSL_SSL_LIBRARIES "${CMAKE_CURRENT_LIST_DIR}/../openssl/openssl-1.0.2u/libssl.a")
+  set(OPENSSL_CRYPTO_LIBRARIES "${CMAKE_CURRENT_LIST_DIR}/../openssl/openssl-1.0.2u/libcrypto.a")
+  set(OPENSSL_INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/../openssl/openssl-1.0.2u/include")
+  set(OPENSSL_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}/../openssl/openssl-1.0.2u/")
+  # Point to custom install path for boost
+  set(BOOST_ROOT "${CMAKE_CURRENT_LIST_DIR}/../boost_1_55_0" CACHE PATH "Boost library path")
+  set(Boost_NO_SYSTEM_PATHS ON CACHE BOOL "Do not search system for Boost")
+  set(CMAKE_C_COMPILER gcc)
+  set(CMAKE_CXX_COMPILER g++)
+ENDIF()
 
 include(CheckCXXSourceRuns)
 include(CheckIncludeFiles)

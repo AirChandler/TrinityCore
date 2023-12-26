@@ -45,6 +45,8 @@ target_link_libraries(bnetserver
   PUBLIC
     shared)
 
+target_compile_options(bnetserver PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 CollectIncludeDirectories(
   ${CMAKE_CURRENT_SOURCE_DIR}
   PUBLIC_INCLUDES

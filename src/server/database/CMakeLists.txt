@@ -54,6 +54,8 @@ target_link_libraries(database
     common
     mysql)
 
+target_compile_options(database PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 set_target_properties(database
     PROPERTIES
       FOLDER
