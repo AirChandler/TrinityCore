@@ -73,6 +73,8 @@ target_link_libraries(common
     threads
     jemalloc)
 
+target_compile_options(common PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 add_dependencies(common revision_data.h)
 
 set_target_properties(common

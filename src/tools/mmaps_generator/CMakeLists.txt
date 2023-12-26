@@ -22,6 +22,8 @@ target_link_libraries(mmaps_generator
     zlib
     bzip2)
 
+target_compile_options(mmaps_generator PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 CollectIncludeDirectories(
   ${CMAKE_CURRENT_SOURCE_DIR}
   PUBLIC_INCLUDES)

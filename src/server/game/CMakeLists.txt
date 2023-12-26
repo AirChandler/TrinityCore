@@ -47,6 +47,8 @@ target_link_libraries(game
   PRIVATE
     efsw)
 
+target_compile_options(game PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 set_target_properties(game
     PROPERTIES
       FOLDER

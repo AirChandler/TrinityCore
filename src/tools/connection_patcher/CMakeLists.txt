@@ -37,6 +37,8 @@ target_link_libraries(connection_patcher
     common
 )
 
+target_compile_options(connection_patcher PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 if (UNIX)
   install(TARGETS connection_patcher DESTINATION bin)
 elseif (WIN32)

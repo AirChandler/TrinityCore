@@ -5033,7 +5033,7 @@ void Player::UpdateRating(CombatRating cr)
 
     switch (cr)
     {
-        case CR_UNUSED_1:
+        case CR_RESERVED_1:
         case CR_DEFENSE_SKILL:
             break;
         case CR_DODGE:
@@ -5081,7 +5081,7 @@ void Player::UpdateRating(CombatRating cr)
         case CR_HASTE_SPELL:
             break;
         case CR_AVOIDANCE:
-        case CR_UNUSED_2:
+        case CR_RESERVED_2:
         case CR_WEAPON_SKILL_RANGED:
             break;
         case CR_EXPERTISE:
@@ -5098,8 +5098,8 @@ void Player::UpdateRating(CombatRating cr)
         case CR_MASTERY:
             UpdateMastery();
             break;
-        case CR_UNUSED_3:
-        case CR_UNUSED_4:
+        case CR_RESERVED_3:
+        case CR_RESERVED_4:
         case CR_VERSATILITY_DAMAGE_DONE:
         case CR_VERSATILITY_DAMAGE_TAKEN:
             break;

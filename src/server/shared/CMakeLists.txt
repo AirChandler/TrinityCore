@@ -28,6 +28,8 @@ add_library(shared
   ${PRIVATE_PCH_SOURCE}
 )
 
+target_compile_options(shared PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 CollectIncludeDirectories(
   ${CMAKE_CURRENT_SOURCE_DIR}
   PUBLIC_INCLUDES

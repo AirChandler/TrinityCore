@@ -56,6 +56,8 @@ add_library(scripts STATIC
   ${PRIVATE_PCH_SOURCE}
 )
 
+target_compile_options(scripts PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 target_include_directories(scripts
   PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
