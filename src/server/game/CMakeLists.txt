@@ -220,6 +220,8 @@ add_library(game STATIC
   ${game_STAT_SRCS}
 )
 
+target_compile_options(game PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 # Generate precompiled header
 if (USE_COREPCH)
   add_cxx_pch(game ${game_STAT_PCH_HDR} ${game_STAT_PCH_SRC})

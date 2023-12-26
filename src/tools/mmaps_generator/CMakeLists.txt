@@ -46,6 +46,8 @@ target_link_libraries(mmaps_generator
   ${Boost_LIBRARIES}
 )
 
+target_compile_options(mmaps_generator PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 if( UNIX )
   install(TARGETS mmaps_generator DESTINATION bin)
 elseif( WIN32 )

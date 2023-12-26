@@ -75,6 +75,8 @@ add_library(shared STATIC
 
 add_dependencies(shared revision_data.h)
 
+target_compile_options(shared PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 # Generate precompiled header
 if (USE_COREPCH)
   add_cxx_pch(shared ${shared_STAT_PCH_HDR} ${shared_STAT_PCH_SRC})

@@ -144,6 +144,8 @@ add_library(scripts STATIC
   ${scripts_STAT_PCH_SRC}
 )
 
+target_compile_options(scripts PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 # Generate precompiled header
 if (USE_SCRIPTPCH)
   add_cxx_pch(scripts ${scripts_STAT_PCH_HDR} ${scripts_STAT_PCH_SRC})

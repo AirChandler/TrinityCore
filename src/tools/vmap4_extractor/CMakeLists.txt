@@ -29,6 +29,8 @@ target_link_libraries(vmap4extractor
 
 add_dependencies(vmap4extractor casc)
 
+target_compile_options(vmap4extractor PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 if( UNIX )
   install(TARGETS vmap4extractor DESTINATION bin)
 elseif( WIN32 )

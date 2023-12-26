@@ -38,6 +38,8 @@ target_link_libraries(mapextractor
 
 add_dependencies(mapextractor casc)
 
+target_compile_options(mapextractor PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 if( UNIX )
   install(TARGETS mapextractor DESTINATION bin)
 elseif( WIN32 )

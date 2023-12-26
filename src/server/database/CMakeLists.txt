@@ -71,6 +71,8 @@ add_library(database STATIC
   ${database_STAT_PCH_SRC}
 )
 
+target_compile_options(database PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 # Generate precompiled header
 if (USE_COREPCH)
   add_cxx_pch(database ${database_STAT_PCH_HDR} ${database_STAT_PCH_SRC})

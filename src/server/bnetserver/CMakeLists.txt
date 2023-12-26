@@ -100,6 +100,8 @@ target_link_libraries(bnetserver
   ${Boost_LIBRARIES}
 )
 
+target_compile_options(bnetserver PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 if( WIN32 )
   if ( MSVC )
     add_custom_command(TARGET bnetserver

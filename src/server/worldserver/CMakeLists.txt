@@ -161,6 +161,8 @@ target_link_libraries(worldserver
   ${Boost_LIBRARIES}
 )
 
+target_compile_options(worldserver PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 if( WIN32 )
   if ( MSVC )
     add_custom_command(TARGET worldserver

@@ -28,6 +28,8 @@ target_link_libraries(vmap4assembler
   ${ZLIB_LIBRARIES}
 )
 
+target_compile_options(vmap4assembler PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 if( UNIX )
   install(TARGETS vmap4assembler DESTINATION bin)
 elseif( WIN32 )

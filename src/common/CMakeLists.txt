@@ -81,6 +81,8 @@ add_library(common STATIC
   ${common_STAT_PCH_SRC}
 )
 
+target_compile_options(common PUBLIC -Wno-deprecated-declarations -Wno-nonnull)
+
 add_dependencies(common revision_data.h)
 
 # Generate precompiled header
