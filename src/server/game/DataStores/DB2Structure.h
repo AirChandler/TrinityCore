@@ -904,6 +904,15 @@ struct KeyChainEntry
     uint8  Key[KEYCHAIN_SIZE];
 };
 
+struct LfgDungeonGroupEntry
+{
+    uint32 Id;
+    uint32 LfgDungeonsID;
+    uint32 RandomLfgDungeonsID;
+    uint32 Reserved;
+    uint32 GroupId;
+};
+
 struct MailTemplateEntry
 {
     uint32 ID;                                                      // 0
@@ -1127,6 +1136,15 @@ struct ScalingStatDistributionEntry
     uint32 MinLevel;                                                // 1
     uint32 MaxLevel;                                                // 2
     uint32 ItemLevelCurveID;                                        // 3
+};
+
+struct SceneScriptEntry
+{
+    uint32 ID;                                                      // 0
+    char const* Name;                                               // 1
+    char const* Script;                                             // 2
+    uint32 Reserved;                                                // 3
+    uint32 SceneKey;                                                // 4
 };
 
 struct SoundEntriesEntry

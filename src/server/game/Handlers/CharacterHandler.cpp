@@ -850,11 +850,15 @@ void WorldSession::HandlePlayerLoginOpcode(WorldPackets::Character::PlayerLogin&
         return;
     }
 
-    SendConnectToInstance(WorldPackets::Auth::ConnectToSerial::WorldAttempt1);
+    //SendConnectToInstance(WorldPackets::Auth::ConnectToSerial::WorldAttempt1);
+    HandleContinuePlayerLogin();
 }
 
 void WorldSession::HandleContinuePlayerLogin()
 {
+
+    std::cout << "Handling Account Login\n" << std::endl;
+
     if (!PlayerLoading() || GetPlayer())
     {
         KickPlayer();

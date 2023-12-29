@@ -308,6 +308,10 @@ void HotfixDatabaseConnection::DoPrepareStatements()
         "Key15, Key16, Key17, Key18, Key19, Key20, Key21, Key22, Key23, Key24, Key25, Key26, Key27, Key28, Key29, Key30, Key31, Key32 FROM key_chain"
         " ORDER BY Id DESC", CONNECTION_SYNCH);
 
+    // LfgDungeonGroup.db2
+    PrepareStatement(HOTFIX_SEL_LFG_DUNGEON_GROUP, "SELECT Id, LfgDungeonsID, RandomLfgDungeonsID, Reserved, GroupId FROM lfg_dungeon_group"
+        " ORDER BY Id DESC", CONNECTION_SYNCH);
+
     // MailTemplate.db2
     PrepareStatement(HOTFIX_SEL_MAIL_TEMPLATE, "SELECT ID, Body FROM mail_template ORDER BY ID DESC", CONNECTION_SYNCH);
     PREPARE_LOCALE_STMT(HOTFIX_SEL_MAIL_TEMPLATE, "SELECT ID, Body_lang FROM mail_template_locale WHERE locale = ?", CONNECTION_SYNCH);
@@ -387,6 +391,10 @@ void HotfixDatabaseConnection::DoPrepareStatements()
 
     // ScalingStatDistribution.db2
     PrepareStatement(HOTFIX_SEL_SCALING_STAT_DISTRIBUTION, "SELECT ID, MinLevel, MaxLevel, ItemLevelCurveID FROM scaling_stat_distribution"
+        " ORDER BY ID DESC", CONNECTION_SYNCH);
+    
+    // SceneScript.db2
+    PrepareStatement(HOTFIX_SEL_SCENE_SCRIPT, "SELECT ID, Name, Script, Reserved, SceneKey FROM scene_script"
         " ORDER BY ID DESC", CONNECTION_SYNCH);
 
     // SoundEntries.db2
