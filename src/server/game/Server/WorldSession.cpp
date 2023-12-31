@@ -181,8 +181,7 @@ WorldSession::~WorldSession()
 
 bool WorldSession::PlayerDisconnected() const
 {
-    return !(m_Socket[CONNECTION_TYPE_REALM] && m_Socket[CONNECTION_TYPE_REALM]->IsOpen() &&
-             m_Socket[CONNECTION_TYPE_INSTANCE] && m_Socket[CONNECTION_TYPE_INSTANCE]->IsOpen());
+    return !(m_Socket[CONNECTION_TYPE_REALM] && m_Socket[CONNECTION_TYPE_REALM]->IsOpen());
 }
 
 std::string const & WorldSession::GetPlayerName() const
@@ -233,12 +232,6 @@ void WorldSession::SendPacket(WorldPacket const* packet, bool forced /*= false*/
     // Override connection index
     if (packet->GetConnection() != CONNECTION_TYPE_DEFAULT)
     {
-        if (packet->GetConnection() != CONNECTION_TYPE_INSTANCE && IsInstanceOnlyOpcode(packet->GetOpcode()))
-        {
-            TC_LOG_ERROR("network.opcode", "Prevented sending of instance only opcode %u with connection type %u to %s", packet->GetOpcode(), packet->GetConnection(), GetPlayerInfo().c_str());
-            return;
-        }
-
         conIdx = packet->GetConnection();
     }
 
@@ -479,14 +472,12 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
             _warden->Update();
 
         ///- Cleanup socket pointer if need
-        if ((m_Socket[CONNECTION_TYPE_REALM] && !m_Socket[CONNECTION_TYPE_REALM]->IsOpen()) ||
-            (m_Socket[CONNECTION_TYPE_INSTANCE] && !m_Socket[CONNECTION_TYPE_INSTANCE]->IsOpen()))
+        if (m_Socket[CONNECTION_TYPE_REALM] && !m_Socket[CONNECTION_TYPE_REALM]->IsOpen())
         {
             expireTime -= expireTime > diff ? diff : expireTime;
             if (expireTime < diff || forceExit || !GetPlayer())
             {
                 m_Socket[CONNECTION_TYPE_REALM].reset();
-                m_Socket[CONNECTION_TYPE_INSTANCE].reset();
             }
         }
 
@@ -635,12 +626,6 @@ void WorldSession::LogoutPlayer(bool save)
         CharacterDatabase.Execute(stmt);
     }
 
-    if (m_Socket[CONNECTION_TYPE_INSTANCE])
-    {
-        m_Socket[CONNECTION_TYPE_INSTANCE]->CloseSocket();
-        m_Socket[CONNECTION_TYPE_INSTANCE].reset();
-    }
-
     m_playerLogout = false;
     m_playerSave = false;
     m_playerRecentlyLogout = true;
@@ -705,25 +690,6 @@ void WorldSession::Handle_EarlyProccess(WorldPacket& recvPacket)
 {
     TC_LOG_ERROR("network.opcode", "Received opcode %s that must be processed in WorldSocket::OnRead from %s"
         , GetOpcodeNameForLogging(static_cast<OpcodeClient>(recvPacket.GetOpcode())).c_str(), GetPlayerInfo().c_str());
-}
-
-void WorldSession::SendConnectToInstance(WorldPackets::Auth::ConnectToSerial serial)
-{
-    boost::system::error_code ignored_error;
-    boost::asio::ip::tcp::endpoint instanceAddress = realm.GetAddressForClient(boost::asio::ip::address::from_string(GetRemoteAddress(), ignored_error));
-    instanceAddress.port(sWorld->getIntConfig(CONFIG_PORT_INSTANCE));
-
-    _instanceConnectKey.Fields.AccountId = GetAccountId();
-    _instanceConnectKey.Fields.ConnectionType = CONNECTION_TYPE_INSTANCE;
-    _instanceConnectKey.Fields.Key = urand(0, 0x7FFFFFFF);
-
-    WorldPackets::Auth::ConnectTo connectTo;
-    connectTo.Key = _instanceConnectKey.Raw;
-    connectTo.Serial = serial;
-    connectTo.Payload.Where = instanceAddress;
-    connectTo.Con = CONNECTION_TYPE_INSTANCE;
-
-    SendPacket(connectTo.Write());
 }
 
 void WorldSession::LoadAccountData(PreparedQueryResult result, uint32 mask)

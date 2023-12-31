@@ -564,7 +564,6 @@ class World
 
         WorldSession* FindSession(uint32 id) const;
         void AddSession(WorldSession* s);
-        void AddInstanceSocket(std::shared_ptr<WorldSocket> sock, uint64 connectToKey);
         void SendAutoBroadcast();
         bool RemoveSession(uint32 id);
         /// Get the number of current active sessions

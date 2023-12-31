@@ -29,7 +29,6 @@
 enum ConnectionType
 {
     CONNECTION_TYPE_REALM       = 0,
-    CONNECTION_TYPE_INSTANCE    = 1,
     MAX_CONNECTION_TYPES,
 
     CONNECTION_TYPE_DEFAULT     = -1
@@ -1649,26 +1648,6 @@ enum OpcodeServer : uint32
     SMSG_ARENA_TEAM_STATS                             = 0xBADD,
     SMSG_BUY_BANK_SLOT_RESULT                         = 0xBADD
 };
-
-inline bool IsInstanceOnlyOpcode(uint32 opcode)
-{
-    switch (opcode)
-    {
-        case SMSG_QUEST_GIVER_STATUS: // ClientQuest
-        case SMSG_DUEL_REQUESTED: // Client
-        case SMSG_DUEL_IN_BOUNDS: // Client
-        case SMSG_QUERY_TIME_RESPONSE: // Client
-        case SMSG_DUEL_WINNER: // Client
-        case SMSG_DUEL_COMPLETE: // Client
-        case SMSG_DUEL_OUT_OF_BOUNDS: // Client
-        case SMSG_ATTACK_STOP: // Client
-        case SMSG_ATTACK_START: // Client
-        case SMSG_MOUNT_RESULT: // Client
-            return true;
-        default:
-            return false;
-    }
-}
 
 /// Player state
 enum SessionStatus

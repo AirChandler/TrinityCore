@@ -55,6 +55,7 @@
 #include "World.h"
 #include "WorldPacket.h"
 #include "WorldSession.h"
+#include "MovementPackets.h"
 
 class LoginQueryHolder : public SQLQueryHolder
 {
@@ -850,7 +851,6 @@ void WorldSession::HandlePlayerLoginOpcode(WorldPackets::Character::PlayerLogin&
         return;
     }
 
-    //SendConnectToInstance(WorldPackets::Auth::ConnectToSerial::WorldAttempt1);
     HandleContinuePlayerLogin();
 }
 
@@ -872,8 +872,6 @@ void WorldSession::HandleContinuePlayerLogin()
         m_playerLoading.Clear();
         return;
     }
-
-    SendPacket(WorldPackets::Auth::ResumeComms(CONNECTION_TYPE_INSTANCE).Write());
 
     _charLoginCallback = CharacterDatabase.DelayQueryHolder(holder);
 }
